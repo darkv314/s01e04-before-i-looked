@@ -48,7 +48,8 @@ afterAll(() => {
 
 const html = async (night: string) => {
   const res = await app.request(`/digest/${night}`);
-  return { res, text: await res.text() };
+  // Read the page as a browser shows it: hono/jsx escapes ' as &#39;.
+  return { res, text: (await res.text()).replaceAll('&#39;', "'") };
 };
 
 const json = async (night: string) => {
